@@ -18,7 +18,7 @@ const BotSpecs = props => {
     default:
       botType = <div />;
   }
-
+  console.log(props)
   return (
     <div className="ui segment">
       <div className="ui two column centered grid">
@@ -67,7 +67,7 @@ const BotSpecs = props => {
               Go Back
             </button>
             <button
-              className="ui button fluid"
+              className={bot.recruited ? "ui button fluid disabled" : "ui button fluid"}
               onClick={() => {
                 props.recruitBot(bot.id)
                 props.unselectBot()}
