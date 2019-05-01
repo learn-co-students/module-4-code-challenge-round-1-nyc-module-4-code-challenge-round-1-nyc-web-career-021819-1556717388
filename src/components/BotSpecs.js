@@ -1,6 +1,15 @@
 import React from "react";
 
 const BotSpecs = props => {
+
+  function clickHandler(){
+    props.botHandler(props.bot)
+  }
+
+  function collectionHandler(){
+    props.collection()
+  }
+
   let { bot } = props;
 
   let botType;
@@ -60,19 +69,13 @@ const BotSpecs = props => {
             </div>
             <button
               className="ui button fluid"
-              onClick={() =>
-                console.log('connect this to a function that shows all bots')
-              }
+              onClick={collectionHandler}
             >
               Go Back
             </button>
             <button
               className="ui button fluid"
-              onClick={() =>
-                console.log(
-                  "connect this to a function that adds this bot to your bot army list"
-                )
-              }
+              onClick={clickHandler}
             >
               Enlist
             </button>
