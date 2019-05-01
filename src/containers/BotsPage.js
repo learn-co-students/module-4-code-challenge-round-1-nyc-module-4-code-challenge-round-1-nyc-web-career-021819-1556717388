@@ -30,10 +30,21 @@ class BotsPage extends React.Component {
     }
   }
 
+  handleArmyClick = (e) => {
+    const botIndex = this.state.botArmy.findIndex(bot =>
+      bot.id === parseInt(e.target.id))
+    let newBotArmy = [...this.state.botArmy]
+    const newerBotArmy = newBotArmy.splice(botIndex, 1)
+    this.setState({
+      botArmy: newBotArmy
+    })
+    }
+
+
   render() {
     return (
       <div>
-        <YourBotArmy bots={this.state.botArmy}/>
+        <YourBotArmy handleClick={this.handleArmyClick} bots={this.state.botArmy}/>
         <BotCollection handleClick={this.handleClick} bots={this.state.bots}/>
       </div>
     );
