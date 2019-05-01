@@ -26,12 +26,13 @@ class BotsPage extends React.Component {
   }
 
   // if the bot is in the army, remove it
-  // handleRemoveBot = chosenBot => {
-  //   let newBotArmy = this.state.botArmy.filter(bot => bot !== chosenBot)
-  //   this.setState({
-  //     botArmy: newBotArmy
-  //   })
-  // }
+  handleRemoveBot = botID => {
+    let chosenBot = this.state.bots.find(bot => bot.id === botID)
+    let newBotArmy = this.state.botArmy.filter(bot => bot !== chosenBot)
+    this.setState({
+      botArmy: newBotArmy
+    })
+  }
 
   componentDidMount() {
     fetch('https://bot-battler-api.herokuapp.com/api/v1/bots')
@@ -57,7 +58,7 @@ class BotsPage extends React.Component {
   render() {
     return (
       <div>
-        <YourBotArmy handleClick={this.handleClick} botArmy={this.state.botArmy} />
+        <YourBotArmy handleRemoveBot={this.handleRemoveBot} handleClick={this.handleClick} botArmy={this.state.botArmy} />
         {this.state.chosenBot ? <BotSpecs handleEnlistClick={this.handleEnlistClick} handleBackClick={this.handleBackClick} bot={this.state.chosenBot}/> : <BotCollection botArmy={this.state.botArmy} handleClick={this.handleClick} bots={this.state.bots} /> }
       </div>
     );
