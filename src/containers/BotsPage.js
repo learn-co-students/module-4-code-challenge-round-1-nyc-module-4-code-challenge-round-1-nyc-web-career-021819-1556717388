@@ -15,6 +15,17 @@ class BotsPage extends React.Component {
 			.then((json) => this.setState({ bots: json }));
 	}
 
+	handleClick = (botId) => {
+		//i need to use handle click to manage both adding and removing the bots after added to my army.
+		//i got my functionality working adding my bots to armys
+
+		if (this.state.bots.includes(botId)) {
+			addBot(botId);
+		} else {
+			removeBot(botId);
+		}
+	};
+
 	addBot = (botId) => {
 		// 	console.log('im here!', botId);
 		const foundbot = this.state.bots.find((bot) => bot.id === botId);
@@ -26,12 +37,23 @@ class BotsPage extends React.Component {
 			army: [ ...this.state.army, foundbot ]
 		});
 	};
+
+	removeBot = (botId) => {
+		const foundbot = this.state.bots.find((bot) => bot.id === botId);
+		// console.log(foundbot);
+		const newBots = this.state.bots.filter((bot) => bot.id !== foundbot.id);
+
+		this.setState({
+			bots: [ ...this.state.bots, foundbot ],
+			army: newBots
+		});
+	};
 	render() {
 		// console.log(this.state.bots);
 		return (
 			<div>
-				<YourBotArmy army={this.state.army} />
-				<BlotCollection bots={this.state.bots} addBot={this.addBot} />
+				<YourBotArmy army={this.state.army} handleClick={this.handleClick} />
+				<BlotCollection bots={this.state.bots} handleClick={this.handleClick} />
 			</div>
 		);
 	}

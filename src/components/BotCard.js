@@ -1,4 +1,5 @@
 import React from 'react';
+// import BotSpecs from './BotSpecs';
 
 const BotCard = (props) => {
 	const { bot } = props;
@@ -19,9 +20,11 @@ const BotCard = (props) => {
 			botType = <div />;
 	}
 
+	// onClick = {(e) => props.addBot(bot.id)}
+
 	return (
 		<div className="ui column">
-			<div className="ui card" key={bot.id} onClick={(e) => props.addBot(bot.id)}>
+			<div className="ui card" key={bot.id} onClick={(e) => props.handleClick(bot.id)}>
 				<div className="image">
 					<img alt="oh no!" src={bot.avatar_url} />
 				</div>
