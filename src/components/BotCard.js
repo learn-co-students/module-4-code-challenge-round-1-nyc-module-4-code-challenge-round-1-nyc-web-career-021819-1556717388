@@ -1,5 +1,8 @@
 import React from "react";
 
+
+// On click, setState of enlisted to !! of whatever it is
+
 const BotCard = props => {
   const { bot } = props;
 
@@ -24,7 +27,7 @@ const BotCard = props => {
       <div
         className="ui card"
         key={bot.id}
-        onClick={() => console.log("add code to connect event listener")}
+        onClick={(event) => props.handleClick(event, bot.id)}
       >
         <div className="image">
           <img alt="oh no!" src={bot.avatar_url} />
