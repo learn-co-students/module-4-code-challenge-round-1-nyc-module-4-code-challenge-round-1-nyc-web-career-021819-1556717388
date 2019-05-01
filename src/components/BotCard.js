@@ -1,4 +1,5 @@
 import React from "react";
+import BotSpecs from './BotSpecs'
 
 const BotCard = props => {
   const { bot } = props;
@@ -19,16 +20,22 @@ const BotCard = props => {
       botType = <div />;
   }
 
-  // const handleClick = () => {
-  //   props.enlist ?  () => props.enlist(props.bot) : () => props.removeFromArmy(props.bot)
-  // }
+  //when the card is in the army, findTheBot is not
+  const handleClick = () => {
+    props.findTheBot(props.bot)
+    props.toggleCard()
+    props.enlist ?  () => props.enlist(props.bot) : () => props.removeFromArmy(props.bot)
+  }
+
+  //saved here if my refactor doesnt work
+  //{props.enlist ?  () => props.enlist(props.bot) : () => props.removeFromArmy(props.bot)}
 
   return (
     <div className="ui column">
       <div
         className="ui card"
         key={bot.id}
-        onClick={props.enlist ? () => props.enlist(props.bot) : () => props.removeFromArmy(props.bot)}
+        onClick={handleClick}
       >
         <div className="image">
           <img alt="oh no!" src={bot.avatar_url} />
