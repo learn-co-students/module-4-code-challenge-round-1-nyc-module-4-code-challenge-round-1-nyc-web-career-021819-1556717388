@@ -4,6 +4,7 @@ import "./App.css";
 
 class App extends Component {
   render() {
+    console.log('hi in app')
     return (
       <div className="App">
         <BotsPage />
