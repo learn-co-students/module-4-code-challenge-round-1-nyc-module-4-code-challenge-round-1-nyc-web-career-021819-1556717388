@@ -2,6 +2,7 @@ import React from "react";
 import YourBotArmy from './YourBotArmy'
 import BotCollection from './BotCollection'
 import BotSpecs from '../components/BotSpecs'
+import ClassFilter from '../components/ClassFilter'
 
 class BotsPage extends React.Component {
 
@@ -9,6 +10,7 @@ class BotsPage extends React.Component {
     bots: [],
     mybots: [],
     selectedBot: {},
+    filteredBots: [],
     bottomPage: "BotCollection"
   }
 
@@ -16,7 +18,7 @@ class BotsPage extends React.Component {
     (async () => {
       const resp = await fetch('https://bot-battler-api.herokuapp.com/api/v1/bots')
       const bots = await resp.json()
-      this.setState({bots: bots}, () => (console.log(this.state.bots)))
+      this.setState({bots: bots, filteredBots: bots}, () => (console.log(this.state.bots)))
     })()
   }
 
@@ -46,11 +48,16 @@ class BotsPage extends React.Component {
     })
   }
 
+  handleSelect = (event) => {
+    this.setState(prevState => ({filteredBots: event.target.value === "All" ? prevState.bots : prevState.bots.filter(bot => bot.bot_class === event.target.value)}))
+  }
+
   render() {
     return (
       <div>
+        <ClassFilter handleSelect={this.handleSelect} />
         <YourBotArmy bots={this.state.bots} handleClick={this.handleClick} />
-        {this.state.bottomPage === "BotCollection" ? <BotCollection bots={this.state.bots} handleClick={this.handleClick} /> : <BotSpecs bot={this.state.selectedBot} handleEnlist={this.handleEnlist} handleGoBack={this.handleGoBack} />}
+        {this.state.bottomPage === "BotCollection" ? <BotCollection bots={this.state.filteredBots} handleClick={this.handleClick} /> : <BotSpecs bot={this.state.selectedBot} handleEnlist={this.handleEnlist} handleGoBack={this.handleGoBack} />}
       </div>
     );
   }
