@@ -37,8 +37,9 @@ class BotsPage extends React.Component {
     const enlistedBot = this.state.bots.find(bot => bot.id === botId)
     const enlistedBotIndex = this.state.bots.indexOf(enlistedBot)
     console.log("bot", enlistedBot, "index", enlistedBotIndex)
+    // Can refactor to make not unenlist when selected from full collection but like this
     this.setState(prevState => ({
-      bots: [...prevState.bots.slice(0, enlistedBotIndex), {...enlistedBot, enlisted: true}, ...prevState.bots.slice(enlistedBotIndex + 1)]
+      bots: [...prevState.bots.slice(0, enlistedBotIndex), {...enlistedBot, enlisted: !enlistedBot.enlisted}, ...prevState.bots.slice(enlistedBotIndex + 1)]
     }), () => console.log("updated bot", enlistedBot, "bots", this.state.bots))
     
     // set state of that particular bot to recruited

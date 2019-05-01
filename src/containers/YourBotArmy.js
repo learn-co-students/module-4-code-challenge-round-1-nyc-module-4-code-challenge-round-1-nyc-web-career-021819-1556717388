@@ -7,7 +7,7 @@ class YourBotArmy extends React.Component {
   renderBotArmy() {
     const myArmy = this.props.bots.filter(bot => bot.enlisted)
     console.log(myArmy)
-		return myArmy.map(bot => (<BotCard bot={this.props.bot} handleClick={this.props.handleClick}/>))
+		return myArmy.map(bot => (<BotCard bot={bot} handleClick={this.props.handleClick}/>))
 	}
 
   render(){
