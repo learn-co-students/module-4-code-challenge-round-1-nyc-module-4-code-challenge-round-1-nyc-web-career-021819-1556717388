@@ -23,13 +23,8 @@ const BotCard = props => {
     
     const inArmy = props.army.find(bot => bot.id === props.bot.id)
 
-    // if (inArmy && props.inCollection) {
-    //   return 
-    // } else {
-    //   props.addToArmy(props.bot)
-    // }
-
-    inArmy && props.inCollection ? null : props.addToArmy(props.bot)
+    inArmy && !props.inCollection ? props.addToArmy(props.bot) : props.showSpecs(props.bot)
+    
   }
 
   return (
