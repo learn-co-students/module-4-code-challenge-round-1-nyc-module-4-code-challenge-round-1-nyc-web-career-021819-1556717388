@@ -51,6 +51,8 @@ class BotsPage extends React.Component {
     console.log("bot", enlistedBot, "index", enlistedBotIndex)
     // Can refactor to make not unenlist when selected from full collection but like this
     this.setState(prevState => ({
+      selectedBot: {},
+      bottomPage: "BotCollection",
       bots: [...prevState.bots.slice(0, enlistedBotIndex), {...enlistedBot, enlisted: !enlistedBot.enlisted}, ...prevState.bots.slice(enlistedBotIndex + 1)]
     }), () => console.log("updated bot", enlistedBot, "bots", this.state.bots))
   }
