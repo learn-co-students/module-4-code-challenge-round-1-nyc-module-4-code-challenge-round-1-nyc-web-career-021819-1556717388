@@ -37,11 +37,25 @@ class BotsPage extends React.Component {
     }
   }
 
+  handleClick = () => {
+   const sortedBots = this.state.bots.sort((bot1, bot2) => {
+      return  bot2.health - bot1.health
+   })
+   this.setState({
+     bots: sortedBots
+   })
+  }
+
   render() {
     return (
       <div>
         {/* put your components here */}
         <YourBotArmy  addToArmy={this.addToArmy} army={this.state.army} />
+        <br></br>
+        <br></br>
+        <button onClick={this.handleClick} >Sort by Health</button>
+        <br></br>
+        <br></br>
         <BotCollection army={this.state.army} addToArmy={this.addToArmy} army={this.state.army} bots={this.state.bots}/>
       </div>
     );
