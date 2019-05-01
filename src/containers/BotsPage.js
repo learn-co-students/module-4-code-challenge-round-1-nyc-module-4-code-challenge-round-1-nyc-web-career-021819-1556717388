@@ -1,6 +1,7 @@
 import React from "react";
 import BotCollection from './BotCollection';
 import YourBotArmy from './YourBotArmy';
+import BotSpecs from '../components/BotSpecs';
 const API = 'https://bot-battler-api.herokuapp.com/api/v1/bots'
 
 class BotsPage extends React.Component {
@@ -31,7 +32,6 @@ class BotsPage extends React.Component {
     const botsArmy = [...this.state.army]
     const botsArray = [...this.state.bots]
     const selectedBot = botsArray.find(bot => bot.id === id)
-    // this.setState({ selectedBot: selectedBot })
 
     if (botsArmy.find(bot => bot.id === id)) {
       const idx = botsArmy.findIndex(bot => bot.id === id)
@@ -42,21 +42,6 @@ class BotsPage extends React.Component {
       this.setState({ selectedBot: selectedBot })
     }
 
-
-    //   if (botsArray.find(bot => bot.id === id) && botsArmy.find(bot => bot.id === id)) {
-    //     const idx = botsArmy.findIndex(bot => bot.id === id)
-    //     selectedBot.selected = false
-    //     const mainIdx = botsArray.findIndex(bot => bot.id === id)
-    //     botsArray[mainIdx] = selectedBot
-    //     botsArmy.splice(idx, 1)
-    //     this.setState({ bots: botsArray, army: botsArmy })
-    //   } else if (selectedBot.selected !== true) {
-    //     const status = selectedBot.selected
-    //     selectedBot.selected = !status
-    //     const idx = botsArray.findIndex(bot => bot.id === id)
-    //     botsArray[idx] = selectedBot
-    //     this.setState({ bots: botsArray, selectedBot: selectedBot }, this.renderArmy)
-    //   }
   }
 
   renderArmy = () => {
@@ -82,8 +67,6 @@ class BotsPage extends React.Component {
 
   }
 
-
-
   render() {
     const { bots, army, selectedBot } = this.state
     return (
@@ -91,12 +74,17 @@ class BotsPage extends React.Component {
         <YourBotArmy
           army={army.length > 0 ? army : []}
           handleBot={this.handleBot} />
-        <BotCollection
-          bots={bots}
-          handleEnlist={this.handleEnlist}
-          handleBot={this.handleBot}
-          selectedBot={selectedBot}
-          handleBack={this.handleBack} />
+        {selectedBot ?
+          <BotSpecs
+            bot={selectedBot}
+            handleBack={this.handleBack}
+            handleEnlist={this.handleEnlist} /> :
+          <BotCollection
+            bots={bots}
+            handleEnlist={this.handleEnlist}
+            handleBot={this.handleBot}
+            selectedBot={selectedBot}
+            handleBack={this.handleBack} />}
       </div>
     );
   }
