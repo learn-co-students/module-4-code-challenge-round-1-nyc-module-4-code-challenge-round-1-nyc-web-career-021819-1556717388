@@ -1,6 +1,7 @@
 import React from "react";
 import YourBotArmy from './YourBotArmy'
 import BotCollection from './BotCollection'
+import BotSpecs from '../components/BotSpecs'
 
 class BotsPage extends React.Component {
   //start here with your code for step one
@@ -19,7 +20,9 @@ class BotsPage extends React.Component {
 
   state = {
     bots: [],
-    mybots: []
+    mybots: [],
+    selectedBot: {},
+    bottomPage: "BotCollection"
   }
 
   componentDidMount() {
@@ -33,6 +36,15 @@ class BotsPage extends React.Component {
 
   handleClick = (e, botId) => {
     console.log("clicked!", e.target, botId)
+    const selectedBot = this.state.bots.find(bot => bot.id === botId)
+    this.setState({
+      bottomPage: "BotSpecs",
+      selectedBot: selectedBot
+    })
+  }
+
+  handleEnlist = (e, botId) => {
+    console.log("clicked!", e.target, botId)
     // refactor to find index
     const enlistedBot = this.state.bots.find(bot => bot.id === botId)
     const enlistedBotIndex = this.state.bots.indexOf(enlistedBot)
@@ -41,17 +53,36 @@ class BotsPage extends React.Component {
     this.setState(prevState => ({
       bots: [...prevState.bots.slice(0, enlistedBotIndex), {...enlistedBot, enlisted: !enlistedBot.enlisted}, ...prevState.bots.slice(enlistedBotIndex + 1)]
     }), () => console.log("updated bot", enlistedBot, "bots", this.state.bots))
-    
-    // set state of that particular bot to recruited
-    // render recruited bots in your bot army
-    this.setState
   }
+
+  handleGoBack = (e, botId) => {
+    this.setState({
+      selectedBot: {},
+      bottomPage: "BotCollection"
+    })
+  }
+
+  // handleEnlist = (e, botId) => {
+  //   console.log("clicked!", e.target, botId)
+  //   // refactor to find index
+  //   const enlistedBot = this.state.bots.find(bot => bot.id === botId)
+  //   const enlistedBotIndex = this.state.bots.indexOf(enlistedBot)
+  //   console.log("bot", enlistedBot, "index", enlistedBotIndex)
+  //   // Can refactor to make not unenlist when selected from full collection but like this
+  //   this.setState(prevState => ({
+  //     bots: [...prevState.bots.slice(0, enlistedBotIndex), {...enlistedBot, enlisted: !enlistedBot.enlisted}, ...prevState.bots.slice(enlistedBotIndex + 1)]
+  //   }), () => console.log("updated bot", enlistedBot, "bots", this.state.bots))
+    
+  //   // set state of that particular bot to recruited
+  //   // render recruited bots in your bot army
+  //   this.setState
+  // }
 
   render() {
     return (
       <div>
         <YourBotArmy bots={this.state.bots} handleClick={this.handleClick} />
-        <BotCollection bots={this.state.bots} handleClick={this.handleClick} />>
+        {this.state.bottomPage === "BotCollection" ? <BotCollection bots={this.state.bots} handleClick={this.handleClick} /> : <BotSpecs bot={this.state.selectedBot} handleEnlist={this.handleEnlist} handleGoBack={this.handleGoBack} />}
       </div>
     );
   }

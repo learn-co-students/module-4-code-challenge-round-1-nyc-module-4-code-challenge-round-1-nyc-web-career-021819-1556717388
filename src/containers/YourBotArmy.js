@@ -16,7 +16,6 @@ class YourBotArmy extends React.Component {
         <div className="ui five column grid">
           <div className="row bot-army-row">
             {this.renderBotArmy()}
-            Your Bot Army
           </div>
         </div>
       </div>
