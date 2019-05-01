@@ -18,7 +18,13 @@ class BotsPage extends React.Component {
   }
 
   handleClick = (bot) => {
-    this.setState({clickedBots: [...this.state.clickedBots, bot]})
+    const newBot = this.state.clickedBots.find(clickedbot => {
+      return bot.id === clickedbot.id
+    })
+
+    if (!newBot) {
+      this.setState({clickedBots: [...this.state.clickedBots, bot]})
+    }
   }
 
   handleRemove = (selectBot) => {
@@ -33,7 +39,6 @@ class BotsPage extends React.Component {
 
 
   render() {
-    console.log(this.state.clickedBots)
     return (
       <div>
         <YourBotArmy
