@@ -1,13 +1,15 @@
 import React from "react";
 import BotCollection from './BotCollection'
 import YourBotArmy from './YourBotArmy'
+import Filter from '../components/Filter'
 
 class BotsPage extends React.Component {
   //start here with your code for step one
 
   state = {
     bots: [],
-    army: []
+    army: [],
+    input: ''
   }
 
   getBots = () => {
@@ -46,7 +48,20 @@ class BotsPage extends React.Component {
    })
   }
 
+  filteredBots = () => {
+    return this.state.bots.filter(bot => {
+      return bot.name.includes(this.state.input)
+    })
+  }
+
+  handleChange = (e) => {
+    this.setState({
+        input: e.target.value
+    })
+  }
+
   render() {
+    console.log(this.state.input)
     return (
       <div>
         {/* put your components here */}
@@ -54,9 +69,10 @@ class BotsPage extends React.Component {
         <br></br>
         <br></br>
         <button onClick={this.handleClick} >Sort by Health</button>
+        <Filter handleChange={this.handleChange} />
         <br></br>
         <br></br>
-        <BotCollection army={this.state.army} addToArmy={this.addToArmy} army={this.state.army} bots={this.state.bots}/>
+        <BotCollection army={this.state.army} addToArmy={this.addToArmy} army={this.state.army} bots={this.filteredBots()}/>
       </div>
     );
   }
