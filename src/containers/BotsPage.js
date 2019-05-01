@@ -1,13 +1,15 @@
 import React from "react";
 import BotCollection from './BotCollection'
 import YourBotArmy from './YourBotArmy'
+import BotSpecs from '../components/BotSpecs'
 
 class BotsPage extends React.Component {
   //start here with your code for step one
 
   state = {
     bots: [],
-    enlistedBots: []
+    enlistedBots: [],
+    selectedBot: []
   }
 
   componentDidMount() {
@@ -28,6 +30,13 @@ class BotsPage extends React.Component {
 
     handleBotCardClick = (botObj) => {
 
+      this.setState({
+        selectedBot: botObj
+      })
+
+    }
+
+    handleEnlistButton = (botObj) => {
       const foundBot = this.state.bots.find( bot => {
         return bot === botObj
       })
@@ -40,22 +49,36 @@ class BotsPage extends React.Component {
           return bot
         }
       })
-
       this.setState({
         bots: updatedbots
       })
-      console.log('found bot is', updatedbots)
     }
+
+    handleBackButton = (botObj) => {
+      this.setState({
+        selectedBot: []
+      })
+    }
+
+    botSpecs = () => {
+        return < BotSpecs
+          bot={this.state.selectedBot}
+          handleEnlistButton={this.handleEnlistButton}
+          handleBackButton={this.handleBackButton}
+        />
+      }
 
 
   render() {
-    console.log(this.state.bots)
+    console.log('selected bot is', this.state.selectedBot)
     return (
       <div>
         < YourBotArmy
           bots={this.state.bots}
           handleBotCardClick={this.handleBotCardClick}
         />
+
+        {this.state.selectedBot ? this.botSpecs() : null}
 
         < BotCollection
           bots={this.state.bots}
